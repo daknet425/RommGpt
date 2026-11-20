@@ -17,8 +17,8 @@ export async function POST(request: Request) {
     const arrayBuffer = await imgRes.arrayBuffer();
     const base64 = Buffer.from(arrayBuffer).toString("base64");
     const dataUrl = `data:image/jpeg;base64,${base64}`;
-    return NextResponse.json(dataUrl);
+    return NextResponse.json([imageUrl, dataUrl]);
   } catch (error) {
-    return NextResponse.json(generatedImageUrl);
+    return NextResponse.json([imageUrl, generatedImageUrl]);
   }
 }
