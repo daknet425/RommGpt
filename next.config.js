@@ -2,6 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["upcdn.io", "replicate.delivery"],
+    unoptimized: true,
+    domains: ["upcdn.io", "replicate.delivery", "image.pollinations.ai"],
   },
 };
