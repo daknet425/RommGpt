@@ -10,10 +10,15 @@ export async function POST(request: Request) {
 
   const encodedPrompt = encodeURIComponent(prompt);
   const seed = Math.floor(Math.random() * 1000000);
-  
   const generatedImageUrl = `https://pollinations.ai{encodedPrompt}?width=1024&height=768&seed=${seed}&nologo=true&model=flux`;
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-
-  return NextResponse.json([imageUrl, generatedImageUrl]);
+  try {
+    const imgRes = await fetch(generatedImageUrl);
+    const arrayBuffer = await imgRes.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString("base64");
+    const dataUrl = `data:image/jpeg;base64,${base64}`;
+    return NextResponse.json(dataUrl);
+  } catch (error) {
+    return NextResponse.json(generatedImageUrl);
+  }
 }
